@@ -1,0 +1,47 @@
+.youtube-wrapper {
+    display: inline-block;
+    width: 210px;
+    box-sizing: border-box;
+    margin: 12px;
+}
+
+.img-thumb {
+    width: 100%;
+    height: 118px;
+    overflow: hidden;
+    position: relative;
+}
+
+.img-thumb img {
+    object-fit: cover;
+    width: 100%;
+}
+
+p.time {
+    position: absolute;
+    color: #fff;
+    bottom: 6px;
+    right: 6px;
+    margin: 0;
+    background: #000;
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+p.title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin: 0;
+    margin-top: 10px;
+    color: #2d2d2d;
+}
+
+p.desc {
+    font-weight: 400;
+    font-size: 12px;
+    /* text-transform: capitalize; */
+    color: #777;
+}
