@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import BlogPost from '../BlogPost/BlogPost';
 // import YoutubeComponent from '../../component/YoutubeComponent/YoutubeComponent';
-import LifeCycleComponent from '../LifeCycleComponent/LifeCycleComp';
+// import LifeCycleComponent from '../LifeCycleComponent/LifeCycleComp';
 // import Product from '../Product/Product'
 
 // setState dapat menerima callback
@@ -14,8 +15,9 @@ class Home extends Component {
             */
             <div>
                 
-                <p>Youtube Component</p>
-                <hr/>
+                {/* <p>Life Cycle Component</p>
+                <hr/> */}
+
                 {/* send data to component 
                 < YoutubeComponent 
                     time="6.50" 
@@ -41,7 +43,10 @@ class Home extends Component {
                 <p>Counter</p>
                 < Product />
                 */}
-                <LifeCycleComponent />
+
+                {/* <LifeCycleComponent /> */}
+
+                < BlogPost/>
             </div>
         )
     }
