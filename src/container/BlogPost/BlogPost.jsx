@@ -21,6 +21,7 @@ class BlogPost extends Component {
     // Handle remove after button clicked
     handleRemove = (data) => {
         console.log(data)
+        
         // delete using axios
         axios.delete(`http://localhost:3004/posts/${data}`)
             .then(result => {
@@ -57,6 +58,8 @@ class BlogPost extends Component {
             </Fragment >
         ) 
     }
+    
+    // json-server --watch db.json --port 3004
 }
 
 export default BlogPost;

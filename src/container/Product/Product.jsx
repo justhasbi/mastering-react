@@ -32,8 +32,7 @@ class Product extends Component {
                     </div>
                 </div>
                 {/* onCounterChange boleh bebas dan merupakan props*/}
-                < CardProduct onCounterChange={ (value) => this.handleCounterChange
-                (value) }/>
+                < CardProduct onCounterChange={ (value) => this.handleCounterChange (value) }/>
             </Fragment>
         )
     }
