@@ -13,7 +13,8 @@ class BlogPost extends Component {
             title: '',
             body: '',
             userId: 1
-        }
+        },
+        isUpdate: false
     }
 
     getPostAPI = () => {
@@ -25,20 +26,19 @@ class BlogPost extends Component {
             })
     }
 
-    // Handle remove after button clicked
-    handleRemove = (data) => {       
-        // delete using axios
-        axios.delete(`http://localhost:3004/posts/${data}`)
-            .then(result => {
-                this.getPostAPI()
-            })
-    }
-
     postDataToAPI = () => {
         axios.post('http://localhost:3004/posts', this.state.formBlogPost)
         .then(res =>{ 
             console.log(res)
             this.getPostAPI()
+            this.setState({
+                formBlogPost: {
+                    id: 1,
+                    title: '',
+                    body: '',
+                    userId: 1
+                }
+            })
         }, (err) => {
             console.log(`Error: ${err}`)
         })
@@ -63,7 +63,9 @@ class BlogPost extends Component {
         let timeStamp = new Date().getTime()
         
         // membuat timestamp untuk generate unique id 
-        formBlogPostNew['id'] = timeStamp
+        if(!this.state.isUpdate){
+            formBlogPostNew['id'] = timeStamp
+        }
         formBlogPostNew[event.target.name] = event.target.value
 
         this.setState({
@@ -72,10 +74,52 @@ class BlogPost extends Component {
             // console.log('value state formBlogPost:', this.state.formBlogPost)
         })
     }
+    
+
+    // Handle remove after button clicked
+    handleRemove = (data) => {       
+        // delete using axios
+        axios.delete(`http://localhost:3004/posts/${data}`)
+            .then(result => {
+                this.getPostAPI()
+            })
+    }
+
+    // menangani ubah data
+    handleUpdate = (data) => {
+        console.log(data)
+        this.setState({
+            formBlogPost: data,
+            isUpdate: true
+        })    
+    }
+
+    putDataToAPI = () => {
+        axios.put(`http://localhost:3004/posts/${this.state.formBlogPost.id}`, this.state.formBlogPost)
+        .then(res => {
+            console.log(res)
+            this.getPostAPI()
+            // setelah update, kembalikan nilai isUpdate menjadi false kembali
+            // dan kembalikan nilai dari formBlogPost ke nilai awalnya
+            this.setState({
+                isUpdate: false,
+                formBlogPost: {
+                    id: 1,
+                    title: '',
+                    body: '',
+                    userId: 1
+                }
+            })
+        })
+    }
 
     // menangani submit button
     handleSubmit = () => {
-        this.postDataToAPI()
+        if(this.state.isUpdate){
+            this.putDataToAPI()
+        } else {
+            this.postDataToAPI()
+        }
     }
 
     render() {
@@ -84,10 +128,10 @@ class BlogPost extends Component {
                 <p className="section-title">Blog Post</p>
                 <div className="form-add-post">
                     <label htmlFor="title">Title</label>
-                    <input type="text" name="title" placeholder="Add title" onChange={this.handleFormChange}/>
+                    <input type="text" name="title" placeholder="Add title" onChange={this.handleFormChange} value={this.state.formBlogPost.title}/>
 
                     <label htmlFor="body">Blog Content</label>
-                    <textarea name="body" id="body-content" cols="30" rows="10" placeholder="add blog content" onChange={this.handleFormChange}></textarea>
+                    <textarea name="body" id="body-content" cols="30" rows="10" placeholder="add blog content" onChange={this.handleFormChange} value={this.state.formBlogPost.body}></textarea>
 
                     <button className="btn-submit" onClick={this.handleSubmit}>Simpan</button>
                 </div>
@@ -97,7 +141,10 @@ class BlogPost extends Component {
                             return(
                                 < Post key={post.id} 
                                 data={post}
-                                remove={this.handleRemove}/>
+                                remove={this.handleRemove}
+                                update={this.handleUpdate}
+                                />
+                                
                             )
                         })
                     }
